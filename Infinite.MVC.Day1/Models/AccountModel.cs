@@ -76,4 +76,21 @@ namespace Infinite.MVC.Day1.Models
         public Role Role { get; set; }
         public int RoleId { get; set; }
     }
+
+    public class UsersAndRoles
+    {
+        public string Username { get; set; }
+        public string RoleName { get; set; }
+    }
+
+    public class UserRoleViewModel 
+    {
+        [Display(Name = "Username(s)")]
+        public int UserId { get; set; }
+        [Display(Name = "Roles")]
+        public int RoleId { get; set; }
+        public List<User> Users { get; set; }
+        public List<Role> Roles { get; set; }
+
+    }
 }

@@ -9,7 +9,7 @@ using System.Data.Entity.Migrations;
 
 namespace Infinite.MVC.Day1.Controllers
 {
-   // [Authorize(Roles = "Admin, Employee")]
+    //[Authorize(Roles = "Admin, Employee")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context = null;
@@ -19,8 +19,6 @@ namespace Infinite.MVC.Day1.Controllers
             _context = new ApplicationDbContext();
         }
 
-        // GET: Products
-        //[HttpGet]                
         public ActionResult Index()
         {
             //var products = new Product().GetProducts();
@@ -28,7 +26,7 @@ namespace Infinite.MVC.Day1.Controllers
             return View(products);
         }
 
-        //GET: Products/Details/1
+        [Authorize(Roles = "Customer")]        
         public ActionResult Details(int id)
         {
             var product = _context.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
@@ -39,6 +37,7 @@ namespace Infinite.MVC.Day1.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Employee, Admin")]
         public ActionResult Create()
         {
             var categories = _context.Categories.ToList();
@@ -46,6 +45,8 @@ namespace Infinite.MVC.Day1.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Employee, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product product)
@@ -61,6 +62,8 @@ namespace Infinite.MVC.Day1.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Employee, Admin")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -74,6 +77,8 @@ namespace Infinite.MVC.Day1.Controllers
             return HttpNotFound("Product Id doesn't exists");
         }
 
+
+        [Authorize(Roles = "Employee, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Product product)
@@ -95,6 +100,8 @@ namespace Infinite.MVC.Day1.Controllers
             return View(product);
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)

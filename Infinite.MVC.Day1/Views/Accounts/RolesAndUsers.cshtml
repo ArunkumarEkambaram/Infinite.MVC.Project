@@ -1,0 +1,26 @@
+﻿@model List<Infinite.MVC.Day1.Models.UsersAndRoles>
+
+@{
+    ViewBag.Title = "RolesAndUsers";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 class="text-decoration-underline">Roles And Users</h2>
+
+        <table class="table table-hover">
+            <tr>
+                <th>Users</th>
+                <th>Roles</th>
+            </tr>
+            @foreach (var ur in Model)
+            {
+                <tr>
+                    <td>@ur.Username</td>
+                    <td>@ur.RoleName</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

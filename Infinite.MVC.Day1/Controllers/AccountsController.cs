@@ -1,5 +1,6 @@
 ﻿using Infinite.MVC.Day1.Models;
 using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,7 +21,6 @@ namespace Infinite.MVC.Day1.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            // var roles = _dbContext.Roles.ToList();
             RegisterViewModel viewModel = new RegisterViewModel
             {
                 Roles = _dbContext.Roles.ToList()
@@ -45,17 +45,17 @@ namespace Infinite.MVC.Day1.Controllers
                     _dbContext.Users.Add(user);
                     _dbContext.SaveChanges();
 
-                    //Get the UserId
-                    var userId = user.Id;
-                    var roleId = registerViewModel.RoleId;
-                    UserRolesMapping userRoles = new UserRolesMapping
-                    {
-                        UserId = userId,
-                        RoleId = roleId
-                    };
+                    ////Get the UserId
+                    //var userId = user.Id;
+                    //var roleId = registerViewModel.RoleId;
+                    //UserRolesMapping userRoles = new UserRolesMapping
+                    //{
+                    //    UserId = userId,
+                    //    RoleId = roleId
+                    //};
 
-                    _dbContext.UserRolesMappings.Add(userRoles);
-                    _dbContext.SaveChanges();
+                    //_dbContext.UserRolesMappings.Add(userRoles);
+                    //_dbContext.SaveChanges();
 
                     return RedirectToAction("Login");
                 }
@@ -101,6 +101,57 @@ namespace Infinite.MVC.Day1.Controllers
             FormsAuthentication.SignOut();
             Session.RemoveAll();
             return RedirectToAction("Index", "Home");
+        }
+
+        //Apply Role for User
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult AddRole()
+        {
+            UserRoleViewModel userRole = new UserRoleViewModel
+            {
+                Users = _dbContext.Users.ToList(),
+                Roles = _dbContext.Roles.ToList()
+            };
+            return View(userRole);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult AddRole(UserRoleViewModel userRoleVM)
+        {
+            if (ModelState.IsValid)
+            {
+                UserRolesMapping userRolesMapping = new UserRolesMapping
+                {
+                    UserId = userRoleVM.UserId,
+                    RoleId = userRoleVM.RoleId
+                };
+                _dbContext.UserRolesMappings.Add(userRolesMapping);
+                _dbContext.SaveChanges();
+            }
+
+            UserRoleViewModel userRole = new UserRoleViewModel
+            {
+                Users = _dbContext.Users.ToList(),
+                Roles = _dbContext.Roles.ToList()
+            };
+            return View(userRole);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RolesAndUsers()
+        {
+            var userAndRoles = (from user in _dbContext.Users
+                                join userRole in _dbContext.UserRolesMappings on user.Id equals userRole.UserId
+                                join role in _dbContext.Roles on userRole.RoleId equals role.Id
+                                orderby role.RoleName ascending
+                                select new UsersAndRoles
+                                {
+                                    Username = user.Username,
+                                    RoleName = role.RoleName
+                                }).ToList();
+            return View("RolesAndUsers", userAndRoles);
         }
     }
 }
