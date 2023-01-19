@@ -50,7 +50,7 @@ namespace Infinite.MVC.Day1.Models
         [Compare("Password", ErrorMessage = "Password and Confirm Password doesn't match")]
         public string ConfirmPassword { get; set; }
 
-       // [Required]
+        [Required]
         [Display(Name = "Roles")]
         public int RoleId { get; set; }
 

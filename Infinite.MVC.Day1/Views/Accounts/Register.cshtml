@@ -32,7 +32,13 @@
                 @Html.LabelFor(p => p.ConfirmPassword, new { @class = "form-label" })
                 @Html.TextBoxFor(p => p.ConfirmPassword, new { @class = "form-control", type = "password" })
                 @Html.ValidationMessageFor(p => p.ConfirmPassword)
-            </div>           
+            </div>
+
+            <div class="mb-2">
+                @Html.LabelFor(p => p.RoleId, new { @class = "form-label" })
+                @Html.DropDownListFor(p => p.RoleId, new SelectList(Model.Roles, "Id", "RoleName"), "--Select--", new { @class = "form-select" })
+                @Html.ValidationMessageFor(p => p.RoleId)
+            </div>
             <div class="mt-2">
                 <input type="submit" id="btnSubmit" class="btn btn-primary" value="Register" />
                 <input type="reset" id="btnReset" class="btn btn-warning" value="Reset" />

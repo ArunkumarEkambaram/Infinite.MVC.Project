@@ -27,4 +27,6 @@ namespace Infinite.MVC.Day1.Models
         [NotMapped]
         public int Age { get; set; }
     }
+
+
 }

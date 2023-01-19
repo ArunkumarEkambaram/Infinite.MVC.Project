@@ -1,0 +1,22 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            @Html.ActionLink("Welcome, "+User.Identity.Name, "", "", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("SignOut", "SignOut", "Accounts", null, new { @class = "nav-link" })
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            @Html.ActionLink("Register", "Register", "Accounts", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Login", "Login", "Accounts", null, new { @class = "nav-link" })
+        </li>
+    </ul>
+}
