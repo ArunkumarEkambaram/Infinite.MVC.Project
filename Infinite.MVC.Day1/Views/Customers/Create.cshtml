@@ -1,0 +1,41 @@
+﻿@model Infinite.MVC.Day1.Models.Customer
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="display-6">Create New Customer</div>
+<hr />
+@using (Html.BeginForm())
+{    
+    <div class="mb-2">
+        @Html.LabelFor(p => p.Name, new { @class = "form-label" })
+        @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Name)
+    </div>
+    <div class="mb-2">
+        @Html.LabelFor(p => p.MobileNo, new { @class = "form-label" })
+        @Html.TextBoxFor(p => p.MobileNo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.MobileNo)
+    </div>
+    <div class="mb-2">
+        @Html.LabelFor(p => p.EmailId, new { @class = "form-label" })
+        @Html.TextBoxFor(p => p.EmailId, new { @class = "form-control"})
+        @Html.ValidationMessageFor(p => p.EmailId)
+    </div>
+    <div class="mb-2">
+        @Html.LabelFor(p => p.BirthDate, new { @class = "form-label" })
+        @Html.EditorFor(p => p.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(p => p.BirthDate)
+    </div>
+
+    <div class="mb-2">
+        @Html.LabelFor(p => p.Age, new { @class = "form-label" })
+        @Html.EditorFor(p => p.Age, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(p => p.Age)
+    </div>
+    <div class="mt-2">
+        <input type="submit" id="btnSubmit" class="btn btn-primary" value="Submit" />
+    </div>
+}
+

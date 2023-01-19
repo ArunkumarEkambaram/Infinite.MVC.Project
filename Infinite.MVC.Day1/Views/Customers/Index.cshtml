@@ -1,0 +1,50 @@
+﻿@*Following code is used to create object of Customer class named "Model"*@
+@model List<Infinite.MVC.Day1.Models.Customer>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="display-6 col-md-4">List of Customers</div>
+
+        <div class="col-md-4">
+            @Html.ActionLink("Add New Customer", "Create", "Customers", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+    <hr />
+    @if (Model.Count > 0)
+    {
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <table class="table">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <td>@c.Id</td>
+                            <td>
+                                @Html.ActionLink(c.Name, "Details", "Customers", new { id = c.Id }, null)
+                            </td>
+                            <td>
+                                @Html.ActionLink("New Address", "CreateAddress", "Customers", new { customerId = c.Id }, null)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <span>No Customer</span>
+    }
+</div>
